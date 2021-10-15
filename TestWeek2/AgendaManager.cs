@@ -12,22 +12,31 @@ namespace Laura_Gagliani_TestWeek2
     {
         public static List<Task> listaDiTask = new List<Task>();
 
-        public static void CaricaTaskDaFile()
+        public static void CaricaTaskListDaFile()
         {
             string rigaAgenda;
             string path = @"F:\Laura\Documenti\Avanade\Academy\Week2Test\TestWeek2\TestWeek2\RegistroTask.txt";
 
-            foreach (string line in System.IO.File.ReadLines(path))
+            bool fileTrovato =File.Exists(path);
+            if (fileTrovato)
             {
-                rigaAgenda = line;
-                Task task = new();
-                var arrayDiProprietà = rigaAgenda.Split(",");
+                foreach (string line in System.IO.File.ReadLines(path))
+                {
+                    rigaAgenda = line;
+                    Task task = new();
+                    var arrayDiProprietà = rigaAgenda.Split(",");
 
-                task.DataDiScadenza = DateTime.Parse(arrayDiProprietà[0]);
-                task.LivelloPriorità = (LivelloPriorità)Enum.Parse(typeof(LivelloPriorità), arrayDiProprietà[1]);
-                task.Descrizione = arrayDiProprietà[2];
-                listaDiTask.Add(task);
+                    task.DataDiScadenza = DateTime.Parse(arrayDiProprietà[0]);
+                    task.LivelloPriorità = (LivelloPriorità)Enum.Parse(typeof(LivelloPriorità), arrayDiProprietà[1]);
+                    task.Descrizione = arrayDiProprietà[2];
+                    listaDiTask.Add(task);
 
+                }
+            }
+
+            else
+            {
+                Console.WriteLine("\nErrore! Problema con il file Registro. \nNon è stato possibile caricare nel Gestore i task precedentemente inseriti");
             }
         }
 
@@ -51,21 +60,20 @@ namespace Laura_Gagliani_TestWeek2
             return sceltaMenu;
         }
 
-        public static void RegistraTaskSuFile()
+        public static void RegistraTaskListSuFile()
         {
             string path = @"F:\Laura\Documenti\Avanade\Academy\Week2Test\TestWeek2\TestWeek2\RegistroTask.txt";
             using (StreamWriter sw1 = new StreamWriter(path))
             {
                 foreach (var item in listaDiTask)
                 {
-                    //sw1.Write($"Data di scadenza: {item.DataDiScadenza.ToShortDateString()}; Livello di priorità: {item.LivelloPriorità}; Descrizione: {item.Descrizione}\n");
                     sw1.Write($"{item.DataDiScadenza},{item.LivelloPriorità},{item.Descrizione}\n");
                 }
 
             }
         }
 
-        public static void VisualizzaTaskInAgenda()
+        public static void VisualizzaTasksInAgenda()
         {
             Console.WriteLine("\nI task in agenda sono:");
             StampaTaskDaLista(listaDiTask);
@@ -205,7 +213,7 @@ namespace Laura_Gagliani_TestWeek2
             return null;
         }
 
-        public static void FiltraTaskPerPriorità()
+        public static void FiltraTasksPerPriorità()
         {
             Console.WriteLine("Scegli il livello in base al quale filtrare:");
             LivelloPriorità livelloDaCercare = InserisciLivelloPriorità();

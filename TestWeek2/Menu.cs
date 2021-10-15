@@ -12,7 +12,7 @@ namespace Laura_Gagliani_TestWeek2
         {
             //AgendaManager.TaskDiProva();
             Console.WriteLine("\nBenvenuto nel Gestore Agenda!");
-            AgendaManager.CaricaTaskDaFile();
+            AgendaManager.CaricaTaskListDaFile();
             bool continua = true;
             do
             {
@@ -30,11 +30,11 @@ namespace Laura_Gagliani_TestWeek2
                     case 0:
                         Console.WriteLine("\nChiusura Gestore...");
                         Console.WriteLine("\nRegistrazione task su file...");
-                        AgendaManager.RegistraTaskSuFile();
+                        AgendaManager.RegistraTaskListSuFile();
                         continua = false;
                         break;
                     case 1:
-                        AgendaManager.VisualizzaTaskInAgenda();
+                        AgendaManager.VisualizzaTasksInAgenda();
                         break;
                     case 2:
                         AgendaManager.AggiungiTask();
@@ -43,7 +43,7 @@ namespace Laura_Gagliani_TestWeek2
                         AgendaManager.EliminaTask();
                         break;
                     case 4:
-                        AgendaManager.FiltraTaskPerPriorità();
+                        AgendaManager.FiltraTasksPerPriorità();
                         break;
                 }
 

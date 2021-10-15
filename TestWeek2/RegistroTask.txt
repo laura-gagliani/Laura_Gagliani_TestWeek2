@@ -3,3 +3,5 @@
 21/10/2021 00:00:00,Basso,Comprare concime per le piante
 03/12/2021 00:00:00,Medio,Andare a fare le analisi del sangue
 06/03/2022 00:00:00,Basso,Concerto
+15/10/2021 18:00:00,Alto,Passare in farmacia
+30/10/2021 00:00:00,Basso,Fare orlo pantaloni 
