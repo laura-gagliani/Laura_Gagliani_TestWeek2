@@ -12,6 +12,25 @@ namespace Laura_Gagliani_TestWeek2
     {
         public static List<Task> listaDiTask = new List<Task>();
 
+        public static void CaricaTaskDaFile()
+        {
+            string rigaAgenda;
+            string path = @"F:\Laura\Documenti\Avanade\Academy\Week2Test\TestWeek2\TestWeek2\RegistroTask.txt";
+
+            foreach (string line in System.IO.File.ReadLines(path))
+            {
+                rigaAgenda = line;
+                Task task = new();
+                var arrayDiProprietà = rigaAgenda.Split(",");
+
+                task.DataDiScadenza = DateTime.Parse(arrayDiProprietà[0]);
+                task.LivelloPriorità = (LivelloPriorità)Enum.Parse(typeof(LivelloPriorità), arrayDiProprietà[1]);
+                task.Descrizione = arrayDiProprietà[2];
+                listaDiTask.Add(task);
+
+            }
+        }
+
 
         /// <summary>
         /// metodo che prende in ingresso due int corrispondenti agli estremi della rosa di scelte dello specifico menu,
@@ -26,69 +45,96 @@ namespace Laura_Gagliani_TestWeek2
 
             while ((!sceltaCorretta) || sceltaMenu < limiteInferiore || sceltaMenu > limiteSuperiore)
             {
-                Console.WriteLine("Errore. Scelta incorretta! Premi di nuovo:");
+                Console.WriteLine("\nErrore. Scelta incorretta! Premi di nuovo:");
                 sceltaCorretta = int.TryParse(Console.ReadLine(), out sceltaMenu);
             }
             return sceltaMenu;
         }
 
-        internal static void RegistraTaskSuFile()
+        public static void RegistraTaskSuFile()
         {
             string path = @"F:\Laura\Documenti\Avanade\Academy\Week2Test\TestWeek2\TestWeek2\RegistroTask.txt";
-            using (StreamWriter sw1 = new StreamWriter(path))      
+            using (StreamWriter sw1 = new StreamWriter(path))
             {
                 foreach (var item in listaDiTask)
                 {
-                    sw1.Write($"Data di scadenza: {item.DataDiScadenza.ToShortDateString()}; Livello di priorità: {item.LivelloPriorità}; Descrizione: {item.Descrizione}\n");
+                    //sw1.Write($"Data di scadenza: {item.DataDiScadenza.ToShortDateString()}; Livello di priorità: {item.LivelloPriorità}; Descrizione: {item.Descrizione}\n");
+                    sw1.Write($"{item.DataDiScadenza},{item.LivelloPriorità},{item.Descrizione}\n");
                 }
-                
+
             }
         }
 
         public static void VisualizzaTaskInAgenda()
         {
+            Console.WriteLine("\nI task in agenda sono:");
             StampaTaskDaLista(listaDiTask);
         }
 
         public static void StampaTaskDaLista(List<Task> givenList)
         {
-            
+
             if (givenList.Count == 0)
             {
-                Console.WriteLine("Nessun task trovato");
+                Console.WriteLine("\nNessun task trovato!");
             }
             else
             {
-                Console.WriteLine("\nData di scadenza\tLivello di priorità\tDescrizione");
+                Console.WriteLine("Data di scadenza\tLivello di priorità\tDescrizione");
                 Console.WriteLine("------------------------------------------------------------------------------");
                 foreach (var item in givenList)
                 {
-                    Console.Write($"{item.DataDiScadenza.ToShortDateString()}\t\t\t{item.LivelloPriorità}\t\t{item.Descrizione}\n");
+                    Console.Write($"{item.DataDiScadenza}\t\t{item.LivelloPriorità}\t\t{item.Descrizione}\n");
                 }
+                Console.WriteLine("------------------------------------------------------------------------------");
+
             }
-            
+
         }
 
         public static void AggiungiTask()
         {
 
             Task task = new Task();
+            bool ripetizione;
+            do
+            {
+                Console.WriteLine("\nInserisci una descrizione:");
+                task.Descrizione = Console.ReadLine();
+                Console.WriteLine("\nInserisci una data di scadenza:");
+                task.DataDiScadenza = InserisciDataScadenza();
+                Console.WriteLine("\nInserisci un livello di priorità:");
+                task.LivelloPriorità = InserisciLivelloPriorità();
 
-            Console.WriteLine("Inserisci una descrizione");
-            task.Descrizione = Console.ReadLine();
-            Console.WriteLine("Inserisci una data di scadenza");
-            task.DataDiScadenza = InserisciDataScadenza();
-            Console.WriteLine("Inserisci un livello di priorità");
-            task.LivelloPriorità = InserisciLivelloPriorità();
+                ripetizione = ControllaTaskRipetuto(task);
+            } while (ripetizione);
 
             listaDiTask.Add(task);
+            Console.WriteLine("\nTask inserito con successo in agenda");
+        }
+
+        public static bool ControllaTaskRipetuto(Task task)
+        {
+            bool ripetizione = false;
+            foreach (var item in listaDiTask)
+            {
+                if (item.Descrizione.ToLower() == task.Descrizione.ToLower())
+                {
+                    ripetizione = true;
+                }
+            }
+            if (ripetizione)
+            {
+                Console.WriteLine("\nAttenzione! Un task con questa descrizione è già presente in agenda! Inserire un task diverso:");
+            }
+            return ripetizione;
         }
 
         public static LivelloPriorità InserisciLivelloPriorità()
         {
-            Console.WriteLine("\nPremi 1 per livello di priorità ALTO");
-            Console.WriteLine("Premi 2 per livello di priorità MEDIO");
-            Console.WriteLine("Premi 3 per livello di priorità BASSO");
+            Console.WriteLine("\nPremi 1 per livello di priorità Alto");
+            Console.WriteLine("Premi 2 per livello di priorità Medio");
+            Console.WriteLine("Premi 3 per livello di priorità Basso");
             int livelloPriorità = GetCorrectIntInputFromMenu(1, 3);
             return (LivelloPriorità)livelloPriorità;
         }
@@ -96,7 +142,7 @@ namespace Laura_Gagliani_TestWeek2
         public static DateTime InserisciDataScadenza()
         {
             bool dataCorretta = DateTime.TryParse(Console.ReadLine(), out DateTime dataScadenza);
-            while ((!dataCorretta) || dataScadenza <= DateTime.Today)
+            while ((!dataCorretta) || dataScadenza <= DateTime.Now)
             {
                 Console.WriteLine("Errore! Inserisci una data valida:");
                 dataCorretta = DateTime.TryParse(Console.ReadLine(), out dataScadenza);
@@ -107,7 +153,7 @@ namespace Laura_Gagliani_TestWeek2
 
         public static void EliminaTask()
         {
-            Console.WriteLine("I task attualmente in agenda sono:");
+            Console.WriteLine("\nI task attualmente in agenda sono:");
             StampaTaskDaLista(listaDiTask);
 
             Console.WriteLine("\nInserisci una parola chiave o parte della descrizione del task da eliminare:");
@@ -174,15 +220,15 @@ namespace Laura_Gagliani_TestWeek2
             StampaTaskDaLista(listaFiltrata);
         }
 
-        
+
 
         public static void TaskDiProva()
         {
-            Task task1 = new Task() { Descrizione = "portare gatto dal veterinario", LivelloPriorità = (LivelloPriorità)1, DataDiScadenza = new DateTime(2021, 10, 20, 15,30) };
+            Task task1 = new Task() { Descrizione = "Portare gatto dal veterinario", LivelloPriorità = (LivelloPriorità)1, DataDiScadenza = new DateTime(2021, 11, 03, 15, 30, 00) };
             listaDiTask.Add(task1);
-            Task task2 = new Task() { Descrizione = "innaffiare le piante", LivelloPriorità = (LivelloPriorità)1 };
+            Task task2 = new Task() { Descrizione = "Innaffiare le piante", LivelloPriorità = (LivelloPriorità)1, DataDiScadenza = new DateTime(2021, 10, 17) };
             listaDiTask.Add(task2);
-            Task task3 = new Task() { Descrizione = "comprare concime per le piante", LivelloPriorità = (LivelloPriorità)3 };
+            Task task3 = new Task() { Descrizione = "Comprare concime per le piante", LivelloPriorità = (LivelloPriorità)3, DataDiScadenza = new DateTime(2021, 10, 21) };
             listaDiTask.Add(task3);
         }
 

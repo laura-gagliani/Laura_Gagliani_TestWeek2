@@ -10,13 +10,13 @@ namespace Laura_Gagliani_TestWeek2
     {
         public static void Start()
         {
-            AgendaManager.TaskDiProva();
-            Console.WriteLine("Benvenuto nel Gestore Agenda!\n");
+            //AgendaManager.TaskDiProva();
+            Console.WriteLine("\nBenvenuto nel Gestore Agenda!");
+            AgendaManager.CaricaTaskDaFile();
             bool continua = true;
             do
             {
-                Console.WriteLine("\n\nMENU");
-                Console.WriteLine("-------------------------------------------");
+                Console.WriteLine("\n ******* MENU *******");
                 Console.WriteLine("Premi 1 per visualizzare i task in agenda");
                 Console.WriteLine("Premi 2 per aggiungere un nuovo task");
                 Console.WriteLine("Premi 3 per eliminare un task");

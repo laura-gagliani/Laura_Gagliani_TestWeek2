@@ -1,3 +1,5 @@
-Data di scadenza: 01/01/0001; Livello di priorità: Alto; Descrizione: innaffiare le piante
-Data di scadenza: 01/01/0001; Livello di priorità: Basso; Descrizione: comprare concime per le piante
-Data di scadenza: 05/11/2021; Livello di priorità: Medio; Descrizione: fare le analisi del sangue
+03/11/2021 15:30:00,Alto,Portare gatto dal veterinario
+17/10/2021 00:00:00,Alto,Innaffiare le piante
+21/10/2021 00:00:00,Basso,Comprare concime per le piante
+03/12/2021 00:00:00,Medio,Andare a fare le analisi del sangue
+06/03/2022 00:00:00,Basso,Concerto
