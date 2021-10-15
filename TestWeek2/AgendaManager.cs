@@ -1,10 +1,11 @@
-﻿using System;
+﻿using Laura_Gagliani_TestWeek2;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TestWeek2
+namespace Laura_Gagliani_TestWeek2
 {
     public static class AgendaManager
     {

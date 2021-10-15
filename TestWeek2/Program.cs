@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TestWeek2
+namespace Laura_Gagliani_TestWeek2
 {
     class Program
     {
