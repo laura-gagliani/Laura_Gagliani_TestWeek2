@@ -23,7 +23,6 @@ namespace Laura_Gagliani_TestWeek2
 
             #endregion
 
-            Console.WriteLine("Hello World!");
 
             Menu.Start();
 

@@ -10,11 +10,12 @@ namespace Laura_Gagliani_TestWeek2
     {
         public static void Start()
         {
+            AgendaManager.TaskDiProva();
             Console.WriteLine("Benvenuto nel Gestore Agenda!\n");
             bool continua = true;
             do
             {
-                Console.WriteLine("MENU");
+                Console.WriteLine("\n\nMENU");
                 Console.WriteLine("-------------------------------------------");
                 Console.WriteLine("Premi 1 per visualizzare i task in agenda");
                 Console.WriteLine("Premi 2 per aggiungere un nuovo task");
@@ -28,6 +29,8 @@ namespace Laura_Gagliani_TestWeek2
                 {
                     case 0:
                         Console.WriteLine("\nChiusura Gestore...");
+                        Console.WriteLine("\nRegistrazione task su file...");
+                        AgendaManager.RegistraTaskSuFile();
                         continua = false;
                         break;
                     case 1:
@@ -44,9 +47,9 @@ namespace Laura_Gagliani_TestWeek2
                         break;
                 }
 
-            }while(continua) ;
+            } while (continua);
 
-            
+
         }
     }
 }

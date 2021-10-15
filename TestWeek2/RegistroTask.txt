@@ -1,0 +1,3 @@
+Data di scadenza: 01/01/0001; Livello di priorità: Alto; Descrizione: innaffiare le piante
+Data di scadenza: 01/01/0001; Livello di priorità: Basso; Descrizione: comprare concime per le piante
+Data di scadenza: 05/11/2021; Livello di priorità: Medio; Descrizione: fare le analisi del sangue
